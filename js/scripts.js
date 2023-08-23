@@ -36,42 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
 const postRequest = 'http://localhost:1337/api/posts/';
 const postImgUrl = 'http://localhost:1337/api/posts?populate=hero';
 
-const userRequset = 'http://jsonplaceholder.org/users';
-
-let posts = [];
-let users = [];
-
 const postContainer = document.querySelector('.posts');
-
-/* async function loadData() {
-  posts = await fetch(postRequest).then(response => response.json());
-  // users = await fetch(userRequset).then(response => response.json());
-  // console.log(posts);
-
-  for (const post of posts.data) {
-    console.log(post);
-    postContainer.innerHTML = `
-    <div class="post-preview">
-              <a href="#/${post.id}" >
-                <h2 class="post-title">
-                  ${post.attributes.title}
-                </h2>
-              
-              </a>
-              <h3 class="post-subtitle">
-              ${post.attributes.summary}
-            </h3>
-              <p class="post-meta">
-                Posted by 
-                <a href="#!">Start Bootstrap</a>
-                on September 24, 2023
-              </p>
-            </div>
-    `;
-  }
-}
- */
-// loadData();
 
 window.addEventListener('hashchange', changeRoute);
 
@@ -94,8 +59,7 @@ async function loadPageUrl(url) {
 async function loadSubPage(url) {
   const post = await fetch(url).then(r => r.json());
   const postImg = await fetch(postImgUrl).then(r => r.json());
-  console.log(postImg);
-  console.log(postImg.data[0].attributes.hero.data.attributes.url);
+
   const imgUrl =
     `http://localhost:1337` +
     postImg.data[0].attributes.hero.data.attributes.url;
@@ -154,55 +118,3 @@ async function loadHomePage() {
 }
 
 changeRoute();
-
-/*
-const servicePrefix = 'http://localhost:1337/api/posts/';
-
-const contentEl = document.querySelector('.content');
-
-window.addEventListener('hashchange', changeRoute);
-
-function changeRoute() {
-  const pageUrl = location.hash.substring(2);
-  loadPage(pageUrl);
-}
-
-async function loadPage(url) {
-  contentEl.innerHTML = 'Yükleniyor';
-  if (url === '') {
-    loadHomePage();
-  } else {
-    loadSubPage(servicePrefix + url);
-  }
-}
-
-async function loadSubPage(url) {
-  const post = await fetch(url).then(r => r.json());
-
-  contentEl.innerHTML = `
-        <div class="post">
-            <h3>${post.data.attributes.title}</h3>
-            <h4>${post.data.attributes.summary}</h4>
-            <div class="content">
-                ${post.data.attributes.content}
-            </div>
-        </div>
-        `;
-}
-
-async function loadHomePage() {
-  const posts = await fetch(servicePrefix).then(r => r.json());
-  contentEl.innerHTML = '';
-  for (const post of posts.data) {
-    contentEl.innerHTML += `
-        <div class="post">
-            <h3><a href="#/${post.id}">${post.attributes.title}</a></h3>
-            <h4><a href="#/${post.id}">${post.attributes.summary}</a></h4>
-            <hr>
-        </div>
-        `;
-  }
-}
-
-changeRoute();
- */
